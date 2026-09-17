@@ -1,17 +1,59 @@
 {
   "policy_name": "Corporate Travel & Expense (T&E) Policy - Global Advisory",
-  "version": "2026.1",
+  "version": "2026.2",
+  "valid_categories": [
+    "client_entertainment",
+    "travel",
+    "meals",
+    "software_and_subscriptions",
+    "office_supplies"
+  ],
   "category_caps": {
     "client_entertainment": 5000.0,
     "travel": 3000.0,
-    "meals": 1500.0
+    "meals": 1500.0,
+    "software_and_subscriptions": 4000.0,
+    "office_supplies": 5000.0
   },
   "single_transaction_review_threshold": 2000.0,
   "aggregate_review_threshold": 2000.0,
   "required_approver_role": "finance_manager",
+  "authorized_approver_roles": [
+    "finance_manager",
+    "corporate_controller"
+  ],
   "rules": {
     "cap_rule": "Total expenditure in any category for a single engagement/task must not exceed the category cap.",
-    "single_review_rule": "Any single transaction strictly exceeding $2,000.00 requires pre-logged sign-off from a finance_manager before the expense can be finalized.",
-    "aggregate_review_rule": "If the cumulative (aggregate) expenditure in a single category within an engagement exceeds $2,000.00, finance_manager sign-off is required, even if every individual line item remains below the single-transaction threshold. Intentionally dividing an expense to circumvent sign-off is strictly prohibited."
+    "single_review_rule": "Any single transaction strictly exceeding $2,000.00 requires pre-logged sign-off from an authorized approver (finance_manager or corporate_controller) before the expense can be finalized.",
+    "aggregate_review_rule": "If cumulative expenditure in a single category within an engagement exceeds $2,000.00, authorized approval is required, even if individual line items remain below threshold.",
+    "structuring_rule": "Intentionally fragmenting an expense into sub-threshold line items to bypass review SLA is strictly prohibited (BSA anti-structuring principles under 31 U.S.C. § 5324).",
+    "role_authorization_rule": "Approval tokens must originate from verified finance_manager or corporate_controller identities. Peer or junior endorsements are non-binding.",
+    "category_allocation_rule": "Transactions must reflect proper General Ledger (GL) classification. Misclassifying client entertainment or travel into operational codes is a SOX 404 internal control violation."
+  },
+  "statutory_mappings": {
+    "cap_check": {
+      "standard": "SOX Section 404(a) / FAR 13.003",
+      "legal_basis": "Internal controls over financial reporting; preventative caps prevent unauthorized corporate asset dissipation."
+    },
+    "single_transaction_review_check": {
+      "standard": "SOX Section 404(b) / COSO Principle 10",
+      "legal_basis": "Preventative dual-authorization control required for disbursements exceeding defined materiality threshold."
+    },
+    "structuring_check": {
+      "standard": "FinCEN 31 U.S.C. § 5324(a)(3) / PCAOB AS 2401",
+      "legal_basis": "Prohibition of structuring transactions to evade reporting or dual-authorization controls."
+    },
+    "role_authorization_check": {
+      "standard": "NIST SP 800-53 AC-3 / AC-6 (Least Privilege)",
+      "legal_basis": "Access enforcement and segregation of duties; approval tokens must originate from authorized financial controllers."
+    },
+    "category_reallocation_check": {
+      "standard": "GAAP ASC 720 / PCAOB AS 2401 / SOX 404",
+      "legal_basis": "Financial statement misclassification and budget laundering; reallocating expenditures to bypass line-item scrutiny."
+    },
+    "audit_integrity_check": {
+      "standard": "NIST SP 800-53 AU-9 / AU-10 (Non-Repudiation)",
+      "legal_basis": "Cryptographic tamper resistance; verifiable Merkle hash chain continuity across ERP action logs."
+    }
   }
 }

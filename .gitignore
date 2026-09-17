@@ -7,3 +7,5 @@ venv/
 .venv/
 *.log
 application_materials/
+*.docx
+create_bw_doc.py
